@@ -39,7 +39,7 @@ export default function Login() {
                 {/* Logo no topo */}
                 <Box>
                     <img
-                        src="/images/nota1.png"
+                        src="/images/logo_prismaflow.webp"
                         alt="Logo Nota Agile"
                         style={{ height: 52 }}
                     />
