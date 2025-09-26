@@ -6,8 +6,10 @@ export const navData: NavItem[] = [
     title: "Cadastros",
     icon: "Folder",
     children: [
-      { title: "Clientes", path: "/clientes", icon: "User" },
+      { title: "Categorias", path: "/categorias", icon: "Layers" },
+      { title: "Clientes", path: "/customers", icon: "User" },
       { title: "Produtos", path: "/produtos", icon: "Box" },
+      { title: "Serviços", path: "/services", icon: "Briefcase" },
     ],
   },
   { title: "Gestão", path: "/gestao", icon: "Settings" },

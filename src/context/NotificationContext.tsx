@@ -1,4 +1,4 @@
-import type { ReactNode} from 'react';
+import type { ReactNode } from 'react';
 
 import React, { useMemo, useState, useContext, useCallback, createContext } from 'react';
 
@@ -33,7 +33,7 @@ export const NotificationProvider: React.FC<{ children: ReactNode }> = ({ childr
   }, [removeNotification]);
 
   const memorizedValue = useMemo(
-    () => ({notifications, addNotification, removeNotification}),
+    () => ({ notifications, addNotification, removeNotification }),
     [notifications, addNotification, removeNotification]
   );
 
