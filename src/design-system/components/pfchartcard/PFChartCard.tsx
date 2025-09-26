@@ -1,5 +1,5 @@
-import { Card, CardContent, Typography } from '@mui/material';
-import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip } from 'recharts';
+import { Card, CardContent, Typography, useTheme } from '@mui/material';
+import { BarChart } from '@mui/x-charts/BarChart';
 
 export type PFChartCardProps = {
     title: string;
@@ -7,20 +7,38 @@ export type PFChartCardProps = {
 };
 
 export default function PFChartCard({ title, data }: PFChartCardProps) {
+    const theme = useTheme();
+
+    const xAxis = [
+        {
+            id: 'categories',
+            data: data.map((d) => d.name),
+            scaleType: 'band' as const,
+        },
+    ];
+
+    const series = [
+        {
+            data: data.map((d) => d.value),
+            color: theme.palette.primary.main,
+        },
+    ];
+
     return (
         <Card sx={{ borderRadius: 3, boxShadow: '0 8px 24px rgba(0,0,0,0.04)' }}>
             <CardContent>
                 <Typography variant="subtitle2" fontWeight={600} gutterBottom>
                     {title}
                 </Typography>
-                <ResponsiveContainer width="100%" height={250}>
-                    <BarChart data={data}>
-                        <XAxis dataKey="name" />
-                        <YAxis />
-                        <Tooltip />
-                        <Bar dataKey="value" fill="#4BA3F2" radius={[6, 6, 0, 0]} />
-                    </BarChart>
-                </ResponsiveContainer>
+                <BarChart
+                    xAxis={xAxis}
+                    series={series}
+                    height={280}
+                    sx={{
+                        borderRadius: 2,
+                        bgcolor: theme.palette.background.paper,
+                    }}
+                />
             </CardContent>
         </Card>
     );
