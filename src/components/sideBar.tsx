@@ -77,7 +77,7 @@ const Sidebar = ({ open, toggleDrawer }: SidebarProps) => {
       {/* Items */}
       <List>
         {navData.map((item) => {
-          const Icon = item.icon;
+          const Icon = item.icon ;
           const hasChildren = !!item.children;
 
           return (
