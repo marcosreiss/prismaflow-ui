@@ -1,5 +1,5 @@
 // src/design-system/theme/prismaTheme.ts
-import { createTheme } from "@mui/material/styles";
+import { createTheme, type Theme } from "@mui/material/styles";
 
 export const prismaTheme = createTheme({
   palette: {
@@ -21,8 +21,8 @@ export const prismaTheme = createTheme({
     "none",
     "0 8px 24px rgba(0,0,0,0.06)",
     "0 10px 30px rgba(0,0,0,0.08)",
-    ...Array(23).fill("0 10px 30px rgba(0,0,0,0.08)"),
-  ] as any,
+    ...Array(22).fill("0 10px 30px rgba(0,0,0,0.08)"),
+  ] as Theme["shadows"],
   typography: {
     fontFamily:
       'Inter, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica Neue, Arial, "Apple Color Emoji", "Segoe UI Emoji"',
