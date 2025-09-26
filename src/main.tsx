@@ -19,7 +19,6 @@ createRoot(document.getElementById('root')!).render(
           <NotificationProvider>
             <Suspense>
               <App />
-              {/* <ReactQueryDevtools initialIsOpen={false} /> */}
               {/* <SnackBarComponent /> */}
             </Suspense>
           </NotificationProvider>

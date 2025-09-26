@@ -9,9 +9,7 @@ function App() {
   const auth = isAuthenticated();
 
   if (auth === null) {
-    // Enquanto verifica o token no AuthContext
     return <LinearProgress />;
-    // ou algum Spinner bonito
   }
 
   return auth ? <PrivateRouter /> : <PublicRouter />;

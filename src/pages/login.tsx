@@ -43,7 +43,9 @@ export default function Login() {
                     // Fazendo o redirect logo em seguida com replace (evita voltar pro login no histórico)
                     setTimeout(() => {
                         addNotification("Login realizado com sucesso!", "success");
-                        router.push("/");
+                        console.log("Router antes do push:", router);
+                        router.push("/customers");
+                        console.log("Fez push para /customers");
                     }, 0);
                 } else {
                     addNotification("Erro: resposta inválida do servidor.", "error");
