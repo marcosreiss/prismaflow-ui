@@ -28,7 +28,6 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           sx={{
             flexGrow: 1,
             p: 3,
-            bgcolor: '#f9f9f9',
             transition: 'all 0.5s ease',
           }}
         >
