@@ -1,12 +1,13 @@
+import { useAuth } from "./context/AuthContext";
 import { PrivateRouter, PublicRouter } from "./routes/section";
 import '@/global.css';
 
 
 function App() {
 
-  const isAuthenticated = false;
+  const { isAuthenticated } = useAuth();
 
-  return isAuthenticated ? (
+  return isAuthenticated() ? (
     <PrivateRouter />
   ) : (
     <PublicRouter />

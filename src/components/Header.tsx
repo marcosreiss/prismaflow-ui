@@ -11,10 +11,12 @@ import {
 import SettingsIcon from '@mui/icons-material/Settings';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useState } from 'react';
+import { useAuth } from '@/context/AuthContext';
 
 export default function Header() {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
+    const { useLogout } = useAuth();
 
     const handleOpenMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
@@ -25,7 +27,8 @@ export default function Header() {
     };
 
     const handleLogout = () => {
-        // lógica de logout aqui
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        useLogout();
         handleCloseMenu();
     };
 
