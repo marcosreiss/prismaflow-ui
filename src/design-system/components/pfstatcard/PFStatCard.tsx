@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Card, CardContent, Typography, Box } from '@mui/material';
 import { useTheme, alpha } from '@mui/material/styles';
 
@@ -17,8 +16,8 @@ export default function PFStatCard({ title, subtitle = 'Este mês', value, color
         <Card
             sx={{
                 borderRadius: 3,
-                boxShadow: '0 4px 12px rgba(0,0,0,0.04)',
-                bgcolor: theme.palette.background.default,
+                boxShadow: `0 8px 24px ${alpha(theme.palette.primary.main, 0.15)}`,
+                bgcolor: theme.palette.background.paper,
             }}
         >
             <CardContent>
