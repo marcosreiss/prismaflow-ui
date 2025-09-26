@@ -9,7 +9,7 @@ import React, {
   useCallback,
   createContext,
 } from "react";
-import { useRouter } from "@/routes/hooks";
+import { useNavigate } from "react-router-dom";
 
 interface AuthContextType {
   token: string | null;
@@ -26,7 +26,7 @@ interface AuthContextType {
 }
 
 interface DecodedToken {
-  exp: number; // expiração (em segundos desde epoch)
+  exp: number;
   username?: string;
   role?: string;
 }
@@ -42,7 +42,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [username, setUsernameState] = useState<string | null>(null);
   const [role, setRoleState] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const router = useRouter();
+  const navigate = useNavigate();
 
   const setUsername = useCallback((newUsername: string | null) => {
     setUsernameState(newUsername);
@@ -97,15 +97,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         const currentTime = Date.now() / 1000;
 
         if (decoded.exp <= currentTime) {
-          // Token expirado
           setToken(null);
-          router.push("/");
+          navigate("/");
         } else {
-          // Timer para expiração automática
           const timeout = (decoded.exp - currentTime) * 1000;
           const timer = setTimeout(() => {
             setToken(null);
-            router.push("/");
+            navigate("/");
           }, timeout);
 
           setIsLoading(false);
@@ -120,7 +118,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
 
     return undefined;
-  }, [setToken, router]);
+  }, [setToken, navigate]);
 
   const isAuthenticated = useCallback(() => {
     if (isLoading) return null;
@@ -138,8 +136,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const useLogout = useCallback(() => {
     setToken(null);
-    router.push("/");
-  }, [setToken, router]);
+    navigate("/");
+  }, [setToken, navigate]);
 
   const memorizedValue = useMemo(
     () => ({
@@ -152,7 +150,16 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       isAuthenticated,
       useLogout,
     }),
-    [token, username, role, setToken, setUsername, setRole, isAuthenticated, useLogout]
+    [
+      token,
+      username,
+      role,
+      setToken,
+      setUsername,
+      setRole,
+      isAuthenticated,
+      useLogout,
+    ]
   );
 
   return (
@@ -162,6 +169,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = (): AuthContextType => {
   const context = useContext(AuthContext);
   if (!context) {

@@ -8,25 +8,15 @@ import type {
   UserRegisterResponse,
 } from "@/types/auth";
 import { loginService, registerService } from "@/services/authService";
-import { useAuth } from "@/context/AuthContext";
 
 /**
  * Hook para autenticação (login) do usuário
  */
 export const useLogin = () => {
-  const { setToken } = useAuth();
-
   return useMutation<UserLoginResponse, AxiosError, UserLoginRequest>({
     mutationFn: (payload) => loginService(payload),
     onSuccess: (data) => {
       console.log("Login efetuado com sucesso:", data);
-
-      if (data.token && data.data) {
-        setToken(data.token, {
-          username: data.data.username,
-          role: data.data.role,
-        });
-      }
     },
     onError: (error) => {
       console.error("Erro ao fazer login:", error);

@@ -13,10 +13,13 @@ import { useLogin } from "@/hooks/useAuth";
 import type { UserLoginRequest } from "@/types/auth";
 import { useNotification } from "@/context/NotificationContext";
 import { useRouter } from "@/routes/hooks";
+import { useAuth } from "@/context/AuthContext";
 
 export default function Login() {
     const { addNotification } = useNotification();
     const router = useRouter();
+    const { setToken } = useAuth();
+
 
     const { control, handleSubmit } = useForm<UserLoginRequest>({
         defaultValues: {
@@ -29,7 +32,13 @@ export default function Login() {
 
     const onSubmit = (data: UserLoginRequest) => {
         login(data, {
-            onSuccess: () => {
+            onSuccess: (res) => {
+                if (res.token && res.data) {
+                    setToken(res.token, {
+                        username: res.data.username,
+                        role: res.data.role,
+                    });
+                }
                 addNotification("Login realizado com sucesso!", "success");
                 router.push("/customers");
             },
@@ -39,6 +48,7 @@ export default function Login() {
             },
         });
     };
+
 
     return (
         <Paper
