@@ -9,6 +9,7 @@ import DashboardLayout from '../layout/dashboardLayout';
 const SignInPage = lazy(() => import('@/pages/login'));
 const CustomersPage = lazy(() => import('@/pages/cliente/clienteIndex'));
 const DashboardPage = lazy(() => import('@/pages/DashboardPage'));
+const SevicePage = lazy(() => import('@/pages/servico/index'));
 
 const renderFallback = (
     <Box display="flex" alignItems="center" justifyContent="center" flex="1 1 auto">
@@ -38,6 +39,7 @@ export function PrivateRouter() {
             children: [
                 { index: true, element: <DashboardPage /> },
                 { path: 'customers', element: <CustomersPage /> },
+                { path: 'services', element: <SevicePage /> },
             ],
         },
         { path: '*', element: <Navigate to="/" replace /> },
