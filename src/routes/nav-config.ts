@@ -1,48 +1,15 @@
-// nav-config.ts
-import {
-  Home,
-  Category,
-  People,
-  Store,
-  Business,
-} from '@mui/icons-material';
-import type { SvgIconComponent } from '@mui/icons-material';
-
-export type NavItem = {
-  title: string;
-  path?: string;
-  icon: SvgIconComponent;
-  children?: { title: string; path: string }[];
-};
+import type { NavItem } from "@/design-system/components/pfsidebar/PFSidebar";
 
 export const navData: NavItem[] = [
+  { title: "Página Inicial", path: "/", icon: "Home" },
   {
-    title: 'Página Inicial',
-    path: '/',
-    icon: Home,
-  },
-  {
-    title: 'Cadastros',
-    icon: Category,
+    title: "Cadastros",
+    icon: "Folder",
     children: [
-      { title: 'Categorias', path: '/categorias' },
-      { title: 'Clientes', path: '/customers' },
-      { title: 'Produtos', path: '/produtos' },
+      { title: "Clientes", path: "/clientes", icon: "User" },
+      { title: "Produtos", path: "/produtos", icon: "Box" },
     ],
   },
-  {
-    title: 'Tabelas',
-    path: '/tabelas',
-    icon: Store,
-  },
-  {
-    title: 'Gestão',
-    path: '/gestao',
-    icon: Business,
-  },
-  {
-    title: 'Relatórios',
-    path: '/relatorios',
-    icon: People,
-  },
+  { title: "Gestão", path: "/gestao", icon: "Settings" },
+  { title: "Relatórios", path: "/relatorios", icon: "BarChart" },
 ];

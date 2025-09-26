@@ -1,31 +1,24 @@
-import React, { useState } from 'react';
 import { Box, CssBaseline } from '@mui/material';
-import Sidebar from '../components/sideBar';
 import Header from '../components/Header';
+import PFSidebar from '@/design-system/components/pfsidebar/PFSidebar';
+import { navData } from '@/routes/nav-config';
 
 type DashboardLayoutProps = {
   children: React.ReactNode;
 };
 
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
-  const [sidebarOpen, setSidebarOpen] = useState(true);
-  const drawerWidthOpen = 240;
-  const drawerWidthClosed = 64;
-
-  const toggleDrawer = () => {
-    setSidebarOpen((prev) => !prev);
-  };
 
   return (
     <Box sx={{ display: 'flex', minHeight: '100vh', width: '100vw' }}>
       <CssBaseline />
-      <Sidebar open={sidebarOpen} toggleDrawer={toggleDrawer} />
+      <PFSidebar navData={navData} />
       <Box
         sx={{
           flexGrow: 1,
           display: 'flex',
           flexDirection: 'column',
-          ml: `${sidebarOpen ? drawerWidthOpen : drawerWidthClosed}px`,
+          ml: "220px",
           transition: 'margin-left 0.9s ease',
         }}
       >
