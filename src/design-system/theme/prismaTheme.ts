@@ -1,5 +1,6 @@
 // src/design-system/theme/prismaTheme.ts
 import { createTheme, type Theme } from "@mui/material/styles";
+import { alpha } from "@mui/material";
 
 export const prismaTheme = createTheme({
   palette: {
@@ -8,8 +9,8 @@ export const prismaTheme = createTheme({
     secondary: { main: "#8B5CF6", contrastText: "#ffffff" },
     success: { main: "#34D399" },
     text: { primary: "#1F2937", secondary: "rgba(31,41,55,0.7)" },
-    background: { default: "#F9FAFC", paper: "#ffffff" },
-    divider: "rgba(1, 2, 3, 0.12)",
+    background: { default: "#F5F5F5", paper: "#ffffff" },
+    divider: "rgba(31,41,55,0.12)",
     gradient: {
       prism: "linear-gradient(90deg, #4BA3F2 0%, #8B5CF6 50%, #34D399 100%)",
       prismHover:
@@ -64,7 +65,11 @@ export const prismaTheme = createTheme({
     },
     MuiCard: {
       styleOverrides: {
-        root: { borderRadius: 8 }, // removida a borda fixa
+        root: ({ theme }) => ({
+          borderRadius: 8,
+          border: "none",
+          boxShadow: `0 8px 24px ${alpha(theme.palette.primary.main, 0.15)}`,
+        }),
       },
     },
     MuiAppBar: {

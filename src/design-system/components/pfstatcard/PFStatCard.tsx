@@ -16,7 +16,6 @@ export default function PFStatCard({ title, subtitle = 'Este mês', value, color
         <Card
             sx={{
                 borderRadius: 3,
-                boxShadow: `0 8px 24px ${alpha(theme.palette.primary.main, 0.15)}`,
                 bgcolor: theme.palette.background.paper,
             }}
         >
