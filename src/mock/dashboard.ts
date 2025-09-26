@@ -1,26 +1,29 @@
 import * as LucideIcons from 'lucide-react';
-
 export type LucideIconName = keyof typeof LucideIcons;
 
 export type MockStat = {
   title: string;
+  subtitle: string;
   value: string | number;
-  icon: LucideIconName;
-  color: string; // cor do chip/ícone
+  color: string;
 };
 
 export const mockStats: MockStat[] = [
-  { title: 'Novos Clientes (mês)', value: 12, icon: 'User', color: '#34D399' },
-  { title: 'Produtos Cadastrados', value: 128, icon: 'Box', color: '#4BA3F2' },
-  { title: 'Estoque Baixo', value: 5, icon: 'AlertTriangle', color: '#EF4444' },
+  { title: 'Faturas', subtitle: 'Este mês', value: '$ 00.00', color: '#4BA3F2' },
+  { title: 'Cotações Para Clientes', subtitle: 'Este mês', value: '$ 00.00', color: '#8B5CF6' },
+  { title: 'Cotações Para Leads', subtitle: 'Este mês', value: '$ 00.00', color: '#34D399' },
+  { title: 'Não Pago', subtitle: 'Não Pago', value: '$ 00.00', color: '#EF4444' },
 
-  { title: 'Vendas (mês)', value: 38, icon: 'ShoppingCart', color: '#8B5CF6' },
-  { title: 'Faturamento (mês)', value: 'R$ 12.450', icon: 'Banknote', color: '#4BA3F2' },
-  { title: 'Ticket Médio', value: 'R$ 327', icon: 'CreditCard', color: '#34D399' },
+  { title: 'Produtos Cadastrados', subtitle: 'Total', value: 128, color: '#4BA3F2' },
+  { title: 'Estoque Baixo', subtitle: 'Abaixo do mínimo', value: 5, color: '#EF4444' },
 
-  { title: 'Descontos', value: 'R$ 1.230', icon: 'Percent', color: '#8B5CF6' },
-  { title: 'Saldo Líquido', value: 'R$ 11.220', icon: 'Wallet', color: '#34D399' },
-  { title: 'Vendas Pendentes', value: 4, icon: 'Clock', color: '#F59E0B' },
+  { title: 'Vendas no Mês', subtitle: 'Quantidade', value: 38, color: '#8B5CF6' },
+  { title: 'Faturamento no Mês', subtitle: 'Total', value: 'R$ 12.450', color: '#4BA3F2' },
+  { title: 'Ticket Médio', subtitle: 'Valor médio', value: 'R$ 327', color: '#34D399' },
+
+  { title: 'Descontos', subtitle: 'Aplicados', value: 'R$ 1.230', color: '#8B5CF6' },
+  { title: 'Saldo Líquido', subtitle: 'Total', value: 'R$ 11.220', color: '#34D399' },
+  { title: 'Vendas Pendentes', subtitle: 'Não concluídas', value: 4, color: '#F59E0B' },
 ];
 
 export const mockSalesChart: { name: string; value: number }[] = [

@@ -10,7 +10,7 @@ type DashboardLayoutProps = {
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
   const theme = useTheme(); // Forçar a aplicação do tema MUI
   return (
-    <Box sx={{ display: 'flex', minHeight: '100vh', width: '100vw', bgcolor: theme.palette.background.paper }}>
+    <Box sx={{ display: 'flex', minHeight: '100vh', width: '100vw', bgcolor: theme.palette.background.default }}>
       <CssBaseline />
       <PFSidebar navData={navData} />
       <Box

@@ -40,7 +40,7 @@ export default function Header() {
             position="static"
             elevation={0}
             sx={{
-                bgcolor: theme.palette.background.paper,
+                bgcolor: theme.palette.background.default,
                 borderBottom: "none",
                 borderRadius: 0,
             }}

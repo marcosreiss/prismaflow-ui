@@ -65,7 +65,7 @@ export default function PFSidebar({ navData, openMobile, onCloseMobile }: PFSide
                         width: SIDEBAR_WIDTH,
                         boxSizing: 'border-box',
                         borderRight: "none",
-                        backgroundColor: theme.palette.background.paper,
+                        backgroundColor: theme.palette.background.default,
                     },
                 }}
                 open
