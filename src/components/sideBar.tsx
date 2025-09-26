@@ -10,6 +10,7 @@ import {
   IconButton,
   Divider,
   Tooltip,
+  useTheme,
 } from '@mui/material';
 import { ExpandLess, ExpandMore, Menu as MenuIcon, PinDrop } from '@mui/icons-material';
 import { navData } from '@/routes/nav-config';
@@ -24,6 +25,8 @@ type SidebarProps = {
 };
 
 const Sidebar = ({ open, toggleDrawer }: SidebarProps) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const theme = useTheme() as any;
   const router = useRouter();
   const [openMenus, setOpenMenus] = useState<Record<string, boolean>>({});
 
@@ -45,17 +48,25 @@ const Sidebar = ({ open, toggleDrawer }: SidebarProps) => {
         whiteSpace: 'nowrap',
         '& .MuiDrawer-paper': {
           width: open ? drawerWidthOpen : drawerWidthClosed,
-          transition: 'width 0.5s ease',
+          transition: 'width 0.4s ease',
           overflowX: 'hidden',
           boxSizing: 'border-box',
-          backgroundColor: '#ffffff',
-          borderRight: '1px solid #e0e0e0',
+          backgroundColor: theme.palette.background.paper,
+          borderRight: `1px solid ${theme.palette.divider}`,
         },
       }}
     >
-      <Box sx={{ display: 'flex', alignItems: 'center', p: 1, justifyContent: open ? 'space-between' : 'center' }}>
+      {/* Header */}
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          p: 1,
+          justifyContent: open ? 'space-between' : 'center',
+        }}
+      >
         <Tooltip title="Menu">
-          <IconButton onClick={toggleDrawer}>
+          <IconButton onClick={toggleDrawer} size="small">
             <MenuIcon />
           </IconButton>
         </Tooltip>
@@ -63,6 +74,7 @@ const Sidebar = ({ open, toggleDrawer }: SidebarProps) => {
 
       <Divider />
 
+      {/* Items */}
       <List>
         {navData.map((item) => {
           const Icon = item.icon;
@@ -72,15 +84,36 @@ const Sidebar = ({ open, toggleDrawer }: SidebarProps) => {
             <Box key={item.title}>
               <ListItemButton
                 onClick={() => {
-                  if (hasChildren) {
-                    toggleMenu(item.title);
-                  } else if (item.path) {
-                    handleNavigate(item.path);
-                  }
+                  if (hasChildren) toggleMenu(item.title);
+                  else if (item.path) handleNavigate(item.path);
+                }}
+                sx={{
+                  borderLeft: openMenus[item.title]
+                    ? `4px solid ${theme.palette.primary.main}`
+                    : '4px solid transparent',
+                  '&:hover': {
+                    background: theme.palette.action.hover,
+                  },
+                  gap: 1,
                 }}
               >
-                <ListItemIcon><Icon color="primary" /></ListItemIcon>
-                {open && <ListItemText primary={item.title} />}
+                <ListItemIcon sx={{ minWidth: 40 }}>
+                  <Icon
+                    sx={{
+                      color: openMenus[item.title]
+                        ? theme.palette.primary.main
+                        : theme.palette.text.secondary,
+                    }}
+                  />
+                </ListItemIcon>
+
+                {open && (
+                  <ListItemText
+                    primary={item.title}
+                    primaryTypographyProps={{ variant: 'body2', fontWeight: 500 }}
+                  />
+                )}
+
                 {open && hasChildren && (openMenus[item.title] ? <ExpandLess /> : <ExpandMore />)}
               </ListItemButton>
 
@@ -88,9 +121,24 @@ const Sidebar = ({ open, toggleDrawer }: SidebarProps) => {
                 <Collapse in={openMenus[item.title] && open} timeout="auto" unmountOnExit>
                   <List component="div" disablePadding sx={{ pl: 4 }}>
                     {item.children?.map((child) => (
-                      <ListItemButton key={child.title} onClick={() => handleNavigate(child.path)}>
-                        <ListItemIcon><PinDrop fontSize="small" /></ListItemIcon>
-                        {open && <ListItemText primary={child.title} />}
+                      <ListItemButton
+                        key={child.title}
+                        onClick={() => handleNavigate(child.path)}
+                        sx={{
+                          pl: 2,
+                          borderLeft: '4px solid transparent',
+                          '&:hover': { background: theme.palette.action.hover },
+                        }}
+                      >
+                        <ListItemIcon sx={{ minWidth: 36 }}>
+                          <PinDrop fontSize="small" sx={{ color: theme.palette.text.secondary }} />
+                        </ListItemIcon>
+                        {open && (
+                          <ListItemText
+                            primary={child.title}
+                            primaryTypographyProps={{ variant: 'body2' }}
+                          />
+                        )}
                       </ListItemButton>
                     ))}
                   </List>

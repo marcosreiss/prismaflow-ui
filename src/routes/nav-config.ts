@@ -26,7 +26,7 @@ export const navData: NavItem[] = [
     icon: Category,
     children: [
       { title: 'Categorias', path: '/categorias' },
-      { title: 'Clientes', path: '/clientes' },
+      { title: 'Clientes', path: '/customers' },
       { title: 'Produtos', path: '/produtos' },
     ],
   },

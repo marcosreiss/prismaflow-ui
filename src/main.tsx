@@ -12,6 +12,8 @@ import '@fontsource/inter/500.css';
 import App from './App.tsx';
 import { AuthProvider } from './context/AuthContext.tsx';
 import { NotificationProvider } from './context/NotificationContext.tsx';
+import { ThemeProvider } from '@emotion/react';
+import { prismaTheme } from './design-system/theme/prismaTheme.ts';
 // import SnackBarComponent from './components/snackBar.tsx';
 
 const queryClient = new QueryClient();
@@ -21,12 +23,14 @@ createRoot(document.getElementById('root')!).render(
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <AuthProvider>
-          <NotificationProvider>
-            <Suspense>
-              <App />
-              {/* <SnackBarComponent /> */}
-            </Suspense>
-          </NotificationProvider>
+          <ThemeProvider theme={prismaTheme}>
+            <NotificationProvider>
+              <Suspense>
+                <App />
+                {/* <SnackBarComponent /> */}
+              </Suspense>
+            </NotificationProvider>
+          </ThemeProvider>
         </AuthProvider>
       </BrowserRouter>
       <ReactQueryDevtools initialIsOpen={false} />

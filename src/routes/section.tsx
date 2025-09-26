@@ -39,7 +39,7 @@ export function PrivateRouter() {
                 { path: 'customers', element: <CustomersPage /> },
             ],
         },
-        { path: '*', element: <Navigate to="/login" replace /> },
+        { path: '*', element: <Navigate to="/" replace /> },
     ]);
 }
 
