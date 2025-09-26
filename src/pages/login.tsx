@@ -4,7 +4,6 @@ import {
     Button,
     TextField,
     Paper,
-    Link,
     Stack,
     Typography,
 } from "@mui/material";
@@ -67,7 +66,7 @@ export default function Login() {
                 sx={{
                     flex: 1,
                     backgroundImage:
-                        'url("/images/bg_blanck_layout_prismaflow.webp")',
+                        'url("/images/bg_black_layout_dark.webp")',
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                     color: "#fff",
@@ -81,22 +80,22 @@ export default function Login() {
                 {/* Logo no topo */}
                 <Box>
                     <img
-                        src="/images/logo_prismaflow.webp"
+                        src="/images/logo_prismaflow_dark.webp"
                         alt="Logo PrismaFlow"
-                        style={{ height: 52 }}
+                        style={{ height: 65 }}
                     />
                 </Box>
 
                 {/* Texto de boas-vindas no centro */}
                 <Box>
-                    <Typography variant="h3" fontWeight="bold">
-                        Hello, welcome!
+                    <Typography variant="h3" fontSize={40} fontWeight="bold">
+                        Olá, bem-vindo ao PrismaFlow!
                     </Typography>
                     <Typography variant="body1" sx={{ mt: 2 }}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
-                        nisi risus.
+                        Organize sua ótica com clareza e fluidez. Faça login para acessar sua gestão integrada.
                     </Typography>
                 </Box>
+
             </Box>
 
             {/* Lado Direito com formulário */}
@@ -118,12 +117,12 @@ export default function Login() {
                         <Controller
                             name="username"
                             control={control}
-                            rules={{ required: "E-mail é obrigatório" }}
+                            rules={{ required: "Usuário é obrigatório" }}
                             render={({ field, fieldState }) => (
                                 <TextField
                                     {...field}
                                     fullWidth
-                                    label="E-mail de Acesso:"
+                                    label="Usuário de Acesso:"
                                     variant="outlined"
                                     size="small"
                                     error={!!fieldState.error}
@@ -150,15 +149,6 @@ export default function Login() {
                                 />
                             )}
                         />
-
-                        <Link
-                            href="#"
-                            underline="hover"
-                            fontSize={13}
-                            alignSelf="flex-end"
-                        >
-                            Esqueci minha senha
-                        </Link>
 
                         <Button
                             type="submit"
