@@ -18,7 +18,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           flexGrow: 1,
           display: 'flex',
           flexDirection: 'column',
-          ml: "220px",
+          pl: "300px",
           transition: 'margin-left 0.9s ease',
         }}
       >
@@ -27,8 +27,6 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           component="main"
           sx={{
             flexGrow: 1,
-            p: 3,
-            transition: 'all 0.5s ease',
           }}
         >
           {children}
