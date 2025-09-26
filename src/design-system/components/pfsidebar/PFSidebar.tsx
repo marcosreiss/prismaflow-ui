@@ -20,7 +20,7 @@ export default function PFSidebar({ navData, openMobile, onCloseMobile }: PFSide
 
     const content = (
         <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-            <Toolbar sx={{ py: 2, justifyContent: 'center' }}>
+            <Toolbar sx={{ py: 2, justifyContent: 'center', mb: 2 }}>
                 <PFSidebarLogo />
             </Toolbar>
 

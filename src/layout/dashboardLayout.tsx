@@ -27,7 +27,8 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           component="main"
           sx={{
             flexGrow: 1,
-            p: 3, // espaçamento interno
+            px: 3,
+            py: 0,
           }}
         >
           {children}

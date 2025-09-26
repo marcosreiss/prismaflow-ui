@@ -43,6 +43,7 @@ export default function Header() {
                 bgcolor: theme.palette.background.default,
                 borderBottom: "none",
                 borderRadius: 0,
+                height: 60,
             }}
         >
             <Toolbar sx={{ justifyContent: "flex-end" }}>
