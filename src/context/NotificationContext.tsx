@@ -44,6 +44,7 @@ export const NotificationProvider: React.FC<{ children: ReactNode }> = ({ childr
   );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useNotification = (): NotificationContextType => {
   const context = useContext(NotificationContext);
   if (!context) {

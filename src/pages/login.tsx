@@ -22,8 +22,8 @@ export default function Login() {
 
     const { control, handleSubmit } = useForm<UserLoginRequest>({
         defaultValues: {
-            username: "sirmark",
-            password: "123456",
+            username: "marcos",
+            password: "Naosei_87#",
         },
     });
 
@@ -33,13 +33,21 @@ export default function Login() {
         login(data, {
             onSuccess: (res) => {
                 if (res.token && res.data) {
+                    // Primeiro seta o token e usuário no contexto
                     setToken(res.token, {
                         username: res.data.username,
                         role: res.data.role,
                     });
+
+                    // Depois do setToken, garante que o contexto já marcou como autenticado
+                    // Fazendo o redirect logo em seguida com replace (evita voltar pro login no histórico)
+                    setTimeout(() => {
+                        addNotification("Login realizado com sucesso!", "success");
+                        router.push("/");
+                    }, 0);
+                } else {
+                    addNotification("Erro: resposta inválida do servidor.", "error");
                 }
-                addNotification("Login realizado com sucesso!", "success");
-                router.push("/customers");
             },
             onError: (err) => {
                 addNotification("Erro ao gerar token. Tente novamente.", "error");
@@ -47,6 +55,7 @@ export default function Login() {
             },
         });
     };
+
 
 
     return (

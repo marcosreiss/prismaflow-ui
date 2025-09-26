@@ -9,7 +9,7 @@ import React, {
   useCallback,
   createContext,
 } from "react";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "@/routes/hooks";
 
 interface AuthContextType {
   token: string | null;
@@ -42,7 +42,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [username, setUsernameState] = useState<string | null>(null);
   const [role, setRoleState] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const navigate = useNavigate();
+
+  const router = useRouter(); // <-- agora usa o hook router
 
   const setUsername = useCallback((newUsername: string | null) => {
     setUsernameState(newUsername);
@@ -98,12 +99,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
         if (decoded.exp <= currentTime) {
           setToken(null);
-          navigate("/");
+          router.push("/"); // <-- troca navigate por router
         } else {
           const timeout = (decoded.exp - currentTime) * 1000;
           const timer = setTimeout(() => {
             setToken(null);
-            navigate("/");
+            router.push("/");
           }, timeout);
 
           setIsLoading(false);
@@ -118,7 +119,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
 
     return undefined;
-  }, [setToken, navigate]);
+  }, [setToken, router]);
 
   const isAuthenticated = useCallback(() => {
     if (isLoading) return null;
@@ -136,8 +137,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const useLogout = useCallback(() => {
     setToken(null);
-    navigate("/");
-  }, [setToken, navigate]);
+    router.push("/"); // <-- também aqui
+  }, [setToken, router]);
 
   const memorizedValue = useMemo(
     () => ({
