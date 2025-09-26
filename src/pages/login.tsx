@@ -11,12 +11,10 @@ import { useForm, Controller } from "react-hook-form";
 import { useLogin } from "@/hooks/useAuth";
 import type { UserLoginRequest } from "@/types/auth";
 import { useNotification } from "@/context/NotificationContext";
-import { useRouter } from "@/routes/hooks";
 import { useAuth } from "@/context/AuthContext";
 
 export default function Login() {
     const { addNotification } = useNotification();
-    const router = useRouter();
     const { setToken } = useAuth();
 
 
@@ -43,9 +41,6 @@ export default function Login() {
                     // Fazendo o redirect logo em seguida com replace (evita voltar pro login no histórico)
                     setTimeout(() => {
                         addNotification("Login realizado com sucesso!", "success");
-                        console.log("Router antes do push:", router);
-                        router.push("/customers");
-                        console.log("Fez push para /customers");
                     }, 0);
                 } else {
                     addNotification("Erro: resposta inválida do servidor.", "error");

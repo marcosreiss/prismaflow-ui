@@ -47,7 +47,7 @@ export function PrivateRouter() {
 export function PublicRouter() {
     return useRoutes([
         {
-            path: '/login',
+            path: '/',
             element: (
                 <BlankLayout>
                     <Suspense fallback={renderFallback}>
@@ -56,6 +56,6 @@ export function PublicRouter() {
                 </BlankLayout>
             ),
         },
-        { path: '*', element: <Navigate to="/login" replace /> },
+        { path: '*', element: <Navigate to="/" replace /> },
     ]);
 }
