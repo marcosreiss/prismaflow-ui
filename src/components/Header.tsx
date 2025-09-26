@@ -41,7 +41,7 @@ export default function Header() {
             elevation={0}
             sx={{
                 bgcolor: theme.palette.background.paper,
-                borderBottom: `1px solid ${theme.palette.divider}`,
+                borderBottom: "none",
                 borderRadius: 0,
             }}
         >

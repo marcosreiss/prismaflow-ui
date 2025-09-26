@@ -11,7 +11,7 @@ export type PFSidebarProps = {
     onCloseMobile?: () => void;
 };
 
-const drawerWidth = 240;
+export const SIDEBAR_WIDTH = 300;
 
 export default function PFSidebar({ navData, openMobile, onCloseMobile }: PFSidebarProps) {
     const theme = useTheme();
@@ -50,7 +50,7 @@ export default function PFSidebar({ navData, openMobile, onCloseMobile }: PFSide
                 ModalProps={{ keepMounted: true }}
                 sx={{
                     display: { xs: 'block', md: 'none' },
-                    '& .MuiDrawer-paper': { width: drawerWidth, boxSizing: 'border-box' },
+                    '& .MuiDrawer-paper': { width: SIDEBAR_WIDTH, boxSizing: 'border-box' },
                 }}
             >
                 {content}
@@ -62,9 +62,10 @@ export default function PFSidebar({ navData, openMobile, onCloseMobile }: PFSide
                 sx={{
                     display: { xs: 'none', md: 'block' },
                     '& .MuiDrawer-paper': {
-                        width: drawerWidth,
+                        width: SIDEBAR_WIDTH,
                         boxSizing: 'border-box',
-                        borderRight: `1px solid ${theme.palette.divider}`,
+                        borderRight: "none",
+                        backgroundColor: theme.palette.background.paper,
                     },
                 }}
                 open
