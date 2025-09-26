@@ -14,7 +14,7 @@ export default function BlankLayout({ children }: BlankLayoutProps) {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      backgroundImage: 'url("/images/bg_blanck_layout_prismaflow.webp")',
+      backgroundImage: 'url("/images/bg_black_layout_dark.webp")',
       backgroundSize: 'cover',
       backgroundPosition: 'center',
     }}>
