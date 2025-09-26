@@ -1,4 +1,4 @@
-import { Box, CssBaseline } from '@mui/material';
+import { Box, CssBaseline, useTheme } from '@mui/material';
 import Header from '../components/Header';
 import PFSidebar, { SIDEBAR_WIDTH } from '@/design-system/components/pfsidebar/PFSidebar';
 import { navData } from '@/routes/nav-config';
@@ -8,8 +8,9 @@ type DashboardLayoutProps = {
 };
 
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
+  const theme = useTheme(); // Forçar a aplicação do tema MUI
   return (
-    <Box sx={{ display: 'flex', minHeight: '100vh', width: '100vw' }}>
+    <Box sx={{ display: 'flex', minHeight: '100vh', width: '100vw', bgcolor: theme.palette.background.paper }}>
       <CssBaseline />
       <PFSidebar navData={navData} />
       <Box

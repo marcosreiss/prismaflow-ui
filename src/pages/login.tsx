@@ -97,8 +97,8 @@ export default function Login() {
                     <Typography variant="h3" fontSize={40} fontWeight="bold">
                         Olá, bem-vindo ao PrismaFlow!
                     </Typography>
-                    <Typography variant="body1" sx={{ mt: 2 }}>
-                        Organize sua ótica com clareza e fluidez. Faça login para acessar sua gestão integrada.
+                    <Typography sx={{ mt: 2, fontSize: 15, lineHeight: 1.4 }}>
+                        Organize sua ótica com clareza e fluidez. <br/> Faça login para acessar sua gestão integrada.
                     </Typography>
                 </Box>
 

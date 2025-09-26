@@ -16,7 +16,7 @@ export const prismaTheme = createTheme({
         "linear-gradient(90deg, #5BB0F4 0%, #9B6CFA 50%, #47D9A6 100%)",
     },
   },
-  shape: { borderRadius: 14 },
+  shape: { borderRadius: 4 },
   shadows: [
     "none",
     "0 8px 24px rgba(0,0,0,0.06)",
@@ -49,7 +49,7 @@ export const prismaTheme = createTheme({
     },
     MuiButton: {
       styleOverrides: {
-        root: { borderRadius: 12, paddingInline: 16, paddingBlock: 10 },
+        root: { borderRadius: 6, paddingInline: 16, paddingBlock: 10 },
       },
       variants: [
         {
@@ -64,11 +64,11 @@ export const prismaTheme = createTheme({
     },
     MuiCard: {
       styleOverrides: {
-        root: { borderRadius: 16, border: "1px solid rgba(31,41,55,0.08)" },
+        root: { borderRadius: 8, border: "1px solid rgba(31,41,55,0.08)" },
       },
     },
     MuiAppBar: {
-      styleOverrides: { root: { borderRadius: 16 } },
+      styleOverrides: { root: { borderRadius: 8 } },
     },
     MuiTextField: {
       defaultProps: { size: "small" },
