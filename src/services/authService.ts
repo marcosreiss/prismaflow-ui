@@ -1,21 +1,24 @@
-import type { GetTokenPayload, LoginPayload, LoginResponse, TokenResponse } from "@/models/authModel";
+// src/services/authService.ts
 import api from "./config/api";
+import type {
+  UserRegisterRequest,
+  UserRegisterResponse,
+  UserLoginRequest,
+  UserLoginResponse,
+} from "@/types/auth";
 
-export const loginService = async (payload: LoginPayload): Promise<LoginResponse> => {
-    payload.idSistema = 2;
-    payload.idUsuario = 0;
-    payload.empresa = "3";
+//  Registro
+export const registerService = async (
+  payload: UserRegisterRequest
+): Promise<UserRegisterResponse> => {
+  const response = await api.post<UserRegisterResponse>("/auth/register", payload);
+  return response.data;
+};
 
-    const respose = await api.post<LoginResponse>("api/Token/ValidarLogin", payload);
-    return respose.data;
-}
-
-export const generateTokenService = async (payload: GetTokenPayload) : Promise<TokenResponse> => {
-    payload.idSistema = "2";
-    payload.idUsuario = "0";
-    payload.perfil = "";
-    payload.estado = "";
-
-    const response = await api.post<TokenResponse>("api/Token/Auth", payload);
-    return response.data;
-}
+//  Login
+export const loginService = async (
+  payload: UserLoginRequest
+): Promise<UserLoginResponse> => {
+  const response = await api.post<UserLoginResponse>("/auth/login", payload);
+  return response.data;
+};

@@ -1,15 +1,24 @@
+// src/contexts/AuthContext.tsx
 import type { ReactNode } from "react";
-
 import { jwtDecode } from "jwt-decode";
-import React, { useMemo, useState, useEffect, useContext, useCallback, createContext } from "react";
-
+import React, {
+  useMemo,
+  useState,
+  useEffect,
+  useContext,
+  useCallback,
+  createContext,
+} from "react";
 import { useRouter } from "@/routes/hooks";
 
 interface AuthContextType {
   token: string | null;
   username: string | null;
   role: string | null;
-  setToken: (token: string | null, user?: { username: string; role: string }) => void;
+  setToken: (
+    token: string | null,
+    user?: { username: string; role: string }
+  ) => void;
   setUsername: (username: string | null) => void;
   setRole: (role: string | null) => void;
   isAuthenticated: () => boolean | null;
@@ -17,9 +26,9 @@ interface AuthContextType {
 }
 
 interface DecodedToken {
-  exp: number; // Campo de expiração (em segundos desde 1970-01-01T00:00:00Z)
-  username?: string; // Nome de usuário
-  role?: string; // Papel do usuário
+  exp: number; // expiração (em segundos desde epoch)
+  username?: string;
+  role?: string;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -32,17 +41,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [token, setTokenState] = useState<string | null>(null);
   const [username, setUsernameState] = useState<string | null>(null);
   const [role, setRoleState] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true); // Adiciona o estado de carregamento
+  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
-
-  const setToken = useCallback((newToken: string | null) => {
-    setTokenState(newToken);
-    if (newToken) {
-      localStorage.setItem("authToken", newToken); 
-    } else {
-      localStorage.removeItem("authToken");
-    }
-  }, []);
 
   const setUsername = useCallback((newUsername: string | null) => {
     setUsernameState(newUsername);
@@ -62,6 +62,26 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   }, []);
 
+  const setToken = useCallback(
+    (newToken: string | null, user?: { username: string; role: string }) => {
+      setTokenState(newToken);
+
+      if (newToken) {
+        localStorage.setItem("authToken", newToken);
+
+        if (user) {
+          setUsername(user.username);
+          setRole(user.role);
+        }
+      } else {
+        localStorage.removeItem("authToken");
+        setUsername(null);
+        setRole(null);
+      }
+    },
+    [setUsername, setRole]
+  );
+
   useEffect(() => {
     const savedToken = localStorage.getItem("authToken");
     const savedUsername = localStorage.getItem("authUsername");
@@ -77,36 +97,33 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         const currentTime = Date.now() / 1000;
 
         if (decoded.exp <= currentTime) {
-          setToken(null); // Remove o token expirado
-          setUsername(null);
-          setRole(null);
+          // Token expirado
+          setToken(null);
           router.push("/");
         } else {
+          // Timer para expiração automática
           const timeout = (decoded.exp - currentTime) * 1000;
           const timer = setTimeout(() => {
             setToken(null);
-            setUsername(null);
-            setRole(null);
             router.push("/");
           }, timeout);
 
-          setIsLoading(false); // Finaliza o carregamento
+          setIsLoading(false);
           return () => clearTimeout(timer);
         }
       } catch (error) {
         console.error("Erro ao decodificar o token:", error);
         setToken(null);
-        setUsername(null);
-        setRole(null);
       }
     } else {
-      setIsLoading(false); // Finaliza o carregamento se não houver token
+      setIsLoading(false);
     }
+
     return undefined;
-  }, [setToken, setUsername, setRole, router]);
+  }, [setToken, router]);
 
   const isAuthenticated = useCallback(() => {
-    if (isLoading) return null; // Ou outro comportamento, como mostrar um placeholder
+    if (isLoading) return null;
     if (!token) return false;
 
     try {
@@ -121,13 +138,20 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const useLogout = useCallback(() => {
     setToken(null);
-    setUsername(null);
-    setRole(null);
     router.push("/");
-  }, [setToken, setUsername, setRole, router]);
+  }, [setToken, router]);
 
   const memorizedValue = useMemo(
-    () => ({ token, username, role, setToken, setUsername, setRole, isAuthenticated, useLogout }),
+    () => ({
+      token,
+      username,
+      role,
+      setToken,
+      setUsername,
+      setRole,
+      isAuthenticated,
+      useLogout,
+    }),
     [token, username, role, setToken, setUsername, setRole, isAuthenticated, useLogout]
   );
 
