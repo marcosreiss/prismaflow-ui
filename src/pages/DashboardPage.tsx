@@ -1,17 +1,15 @@
 import { Box } from "@mui/material";
 import PFStatCard from "@/design-system/components/pfstatcard/PFStatCard";
-import PFChartCard from "@/design-system/components/pfchartcard/PFChartCard";
 import PFRecentList from "@/design-system/components/pfrecentlist/PFRecentList";
 import {
     mockStats,
-    mockSalesChart,
     mockRecentSales,
     mockRecentPayments,
 } from "@/mock/dashboard";
 
 export default function DashboardPage() {
     return (
-        <Box sx={{ p: 3 }}>
+        <Box id="dashboardpage">
             {/* KPIs - CSS Grid */}
             <Box
                 sx={{
@@ -28,9 +26,9 @@ export default function DashboardPage() {
             </Box>
 
             {/* Gráfico */}
-            <Box sx={{ mt: 3 }}>
+            {/* <Box sx={{ mt: 3 }}>
                 <PFChartCard title="Vendas por Mês" data={mockSalesChart} />
-            </Box>
+            </Box> */}
 
             {/* Listas recentes - CSS Grid */}
             <Box

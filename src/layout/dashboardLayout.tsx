@@ -10,7 +10,16 @@ type DashboardLayoutProps = {
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
   const theme = useTheme(); // Forçar a aplicação do tema MUI
   return (
-    <Box sx={{ display: 'flex', minHeight: '100vh', width: '100vw', bgcolor: theme.palette.background.default }}>
+    <Box
+      id="dashboardlayout"
+      sx={{
+        display: 'flex',
+        minHeight: '100vh',
+        width: '100%', // <- corrige overflow-x causado pelo 100vw
+        overflowX: 'hidden', // <- garante que não apareça barra lateral horizontal
+        bgcolor: theme.palette.background.default,
+      }}
+    >
       <CssBaseline />
       <PFSidebar navData={navData} />
       <Box
@@ -27,8 +36,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           component="main"
           sx={{
             flexGrow: 1,
-            px: 3,
-            py: 0,
+            p: 3,
           }}
         >
           {children}
