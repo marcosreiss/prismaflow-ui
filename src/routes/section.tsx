@@ -26,7 +26,6 @@ const renderFallback = (
     </Box>
 );
 
-// Rotas privadas com DashboardLayout
 export function PrivateRouter() {
     return useRoutes([
         {
@@ -42,9 +41,7 @@ export function PrivateRouter() {
                 { index: true, element: <DashboardPage /> },
                 { path: 'customers', element: <CustomersPage /> },
                 { path: 'services', element: <SevicePage /> },
-                // Corrigido para usar a variável com o nome correto
                 { path: 'services', element: <ServicePage /> },
-                // ✅ Rota adicionada
                 { path: 'brands', element: <BrandPage /> },
             ],
         },
@@ -52,7 +49,6 @@ export function PrivateRouter() {
     ]);
 }
 
-// Rotas públicas com BlankLayout
 export function PublicRouter() {
     return useRoutes([
         {
