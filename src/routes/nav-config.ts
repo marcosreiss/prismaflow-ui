@@ -10,6 +10,7 @@ export const navData: NavItem[] = [
       { title: "Clientes", path: "/customers", icon: "User" },
       { title: "Produtos", path: "/produtos", icon: "Box" },
       { title: "Serviços", path: "/services", icon: "Briefcase" },
+      { title: "Marcas", path: "/brands", icon: "Tag" },
     ],
   },
   { title: "Gestão", path: "/gestao", icon: "Settings" },

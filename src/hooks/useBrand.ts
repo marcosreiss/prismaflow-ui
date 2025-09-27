@@ -1,54 +1,83 @@
-// src/services/brandService.ts
+// 1. Importe o 'keepPreviousData' da biblioteca
+import { useQuery, useMutation, useQueryClient, keepPreviousData } from "@tanstack/react-query";
+import type { AxiosError } from "axios";
 
-import baseApi from '@/services/config/api';
-import type {
-    Brand,
-    BrandListResponse,
-    BrandResponse,
-    DeleteBrandResponse,
-} from '@/models/brandModel';
+import {
+    getBrandsService,
+    getBrandByIdService,
+    createBrandService,
+    updateBrandService,
+    deleteBrandService,
+} from "@/services/brandService";
+
+import type { PagedApiResponse, ApiResponse, DeleteResult } from "@/types/apiResponse";
+import type { Brand } from "@/types/brandTypes";
 
 /**
- * GET /api/brands
- * Lista todas as marcas com paginação
+ * Hook para buscar a lista paginada de marcas
  */
-export const getBrandsService = async (): Promise<BrandListResponse> => {
-    const response = await baseApi.get<BrandListResponse>('api/brands');
-    return response.data;
+export const useGetBrands = (params: { page: number; size: number; search?: string }) =>
+    useQuery<PagedApiResponse<Brand>, AxiosError>({
+        queryKey: ["brands", params.page, params.size, params.search],
+        queryFn: () => getBrandsService(params),
+        // 2. Troque 'keepPreviousData' por 'placeholderData'
+        placeholderData: keepPreviousData,
+    });
+
+// ... o resto dos hooks (getById, create, update, delete) permanece igual ...
+// A alteração é apenas nos hooks que usam paginação.
+
+/**
+ * Hook para buscar uma única marca pelo ID
+ */
+export const useGetBrandById = (id: number) =>
+    useQuery<ApiResponse<Brand>, AxiosError>({
+        queryKey: ["brand", id],
+        queryFn: () => getBrandByIdService(id),
+        enabled: !!id,
+    });
+
+/**
+ * Hook para criar uma nova marca
+ */
+export const useCreateBrand = () => {
+    const queryClient = useQueryClient();
+
+    return useMutation<ApiResponse<Brand>, AxiosError, Omit<Brand, 'id'>>({
+        mutationFn: createBrandService,
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["brands"] });
+        },
+    });
 };
 
 /**
- * GET /api/brands/{id}
- * Obtém uma marca pelo ID
+ * Hook para atualizar uma marca
  */
-export const getBrandByIdService = async (id: number): Promise<BrandResponse> => {
-    const response = await baseApi.get<BrandResponse>(`api/brands/${id}`);
-    return response.data;
+export const useUpdateBrand = () => {
+    const queryClient = useQueryClient();
+
+    return useMutation<ApiResponse<Brand>, AxiosError, { id: number; data: Partial<Brand> }>({
+        mutationFn: ({ id, data }) => updateBrandService(id, data),
+        onSuccess: (response) => {
+            queryClient.invalidateQueries({ queryKey: ["brands"] });
+            if (response.data) {
+                queryClient.invalidateQueries({ queryKey: ["brand", response.data.id] });
+            }
+        },
+    });
 };
 
 /**
- * POST /api/brands
- * Cria uma nova marca
+ * Hook para excluir uma marca
  */
-export const createBrandService = async (brandData: Omit<Brand, 'id'>): Promise<BrandResponse> => {
-    const response = await baseApi.post<BrandResponse>('api/brands', brandData);
-    return response.data;
-};
+export const useDeleteBrand = () => {
+    const queryClient = useQueryClient();
 
-/**
- * PUT /api/brands/{id}
- * Atualiza uma marca existente
- */
-export const updateBrandService = async (id: number, brandData: Partial<Brand>): Promise<BrandResponse> => {
-    const response = await baseApi.put<BrandResponse>(`api/brands/${id}`, brandData);
-    return response.data;
-};
-
-/**
- * DELETE /api/brands/{id}
- * Exclui uma marca pelo ID
- */
-export const deleteBrandService = async (id: number): Promise<DeleteBrandResponse> => {
-    const response = await baseApi.delete<DeleteBrandResponse>(`api/brands/${id}`);
-    return response.data;
+    return useMutation<ApiResponse<DeleteResult<Brand>>, AxiosError, number>({
+        mutationFn: deleteBrandService,
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["brands"] });
+        },
+    });
 };

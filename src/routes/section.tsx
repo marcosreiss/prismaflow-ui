@@ -10,6 +10,8 @@ const SignInPage = lazy(() => import('@/pages/login'));
 const CustomersPage = lazy(() => import('@/pages/cliente/clienteIndex'));
 const DashboardPage = lazy(() => import('@/pages/DashboardPage'));
 const SevicePage = lazy(() => import('@/pages/servico/index'));
+const ServicePage = lazy(() => import('@/pages/servico/index'));
+const BrandPage = lazy(() => import('@/pages/brand/index'));
 
 const renderFallback = (
     <Box display="flex" alignItems="center" justifyContent="center" flex="1 1 auto">
@@ -40,6 +42,10 @@ export function PrivateRouter() {
                 { index: true, element: <DashboardPage /> },
                 { path: 'customers', element: <CustomersPage /> },
                 { path: 'services', element: <SevicePage /> },
+                // Corrigido para usar a variável com o nome correto
+                { path: 'services', element: <ServicePage /> },
+                // ✅ Rota adicionada
+                { path: 'brands', element: <BrandPage /> },
             ],
         },
         { path: '*', element: <Navigate to="/" replace /> },

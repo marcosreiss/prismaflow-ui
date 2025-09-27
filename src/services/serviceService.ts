@@ -1,34 +1,59 @@
 // src/services/serviceService.ts
 
 import baseApi from './config/api';
-import type {
-    Service,
-    ServiceListResponse,
-    ServiceResponse,
-    DeleteServiceResponse,
-} from '@/models/serviceModel';
+import type { ApiResponse, PagedApiResponse, DeleteResult } from '@/types/apiResponse';
+import type { Service } from '@/types/serviceTypes';
 
-export const getServicesService = async (): Promise<ServiceListResponse> => {
-    const response = await baseApi.get<ServiceListResponse>('api/services');
+/**
+ * GET /api/services
+ * Lista todos os serviços com paginação
+ */
+export const getServicesService = async (params: {
+    page: number;
+    size: number;
+    search?: string;
+}): Promise<PagedApiResponse<Service>> => {
+    const response = await baseApi.get<PagedApiResponse<Service>>('api/services', { params });
     return response.data;
 };
 
-export const getServiceByIdService = async (id: number): Promise<ServiceResponse> => {
-    const response = await baseApi.get<ServiceResponse>(`api/services/${id}`);
+/**
+ * GET /api/services/{id}
+ * Obtém um serviço pelo ID
+ */
+export const getServiceByIdService = async (id: number): Promise<ApiResponse<Service>> => {
+    const response = await baseApi.get<ApiResponse<Service>>(`api/services/${id}`);
     return response.data;
 };
 
-export const createServiceService = async (serviceData: Omit<Service, 'id' | 'createdAt' | 'updatedAt'>): Promise<ServiceResponse> => {
-    const response = await baseApi.post<ServiceResponse>('api/services', serviceData);
+/**
+ * POST /api/services
+ * Cria um novo serviço
+ */
+export const createServiceService = async (
+    serviceData: Omit<Service, 'id' | 'createdAt' | 'updatedAt'>
+): Promise<ApiResponse<Service>> => {
+    const response = await baseApi.post<ApiResponse<Service>>('api/services', serviceData);
     return response.data;
 };
 
-export const updateServiceService = async (id: number, serviceData: Partial<Service>): Promise<ServiceResponse> => {
-    const response = await baseApi.put<ServiceResponse>(`api/services/${id}`, serviceData);
+/**
+ * PUT /api/services/{id}
+ * Atualiza um serviço existente
+ */
+export const updateServiceService = async (
+    id: number,
+    serviceData: Partial<Service>
+): Promise<ApiResponse<Service>> => {
+    const response = await baseApi.put<ApiResponse<Service>>(`api/services/${id}`, serviceData);
     return response.data;
 };
 
-export const deleteServiceService = async (id: number): Promise<DeleteServiceResponse> => {
-    const response = await baseApi.delete<DeleteServiceResponse>(`api/services/${id}`);
+/**
+ * DELETE /api/services/{id}
+ * Exclui um serviço pelo ID
+ */
+export const deleteServiceService = async (id: number): Promise<ApiResponse<DeleteResult<Service>>> => {
+    const response = await baseApi.delete<ApiResponse<DeleteResult<Service>>>(`api/services/${id}`);
     return response.data;
 };

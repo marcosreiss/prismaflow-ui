@@ -1,5 +1,3 @@
-// src/pages/servico/ServiceIndex.tsx
-
 import React, { useState, useEffect } from 'react';
 import {
     Box, Typography, Paper, Table, TableBody, TableCell, TableContainer,
@@ -8,7 +6,7 @@ import {
 } from '@mui/material';
 import { Edit, Delete } from '@mui/icons-material';
 
-import { useGetServices } from '@/hooks/useService';
+import { useGetBrands } from '@/hooks/useBrand';
 
 // Hook de Debounce para evitar muitas chamadas à API enquanto o usuário digita
 function useDebounce(value: string, delay: number) {
@@ -24,7 +22,7 @@ function useDebounce(value: string, delay: number) {
     return debouncedValue;
 }
 
-export default function ServiceIndex() {
+export default function BrandIndex() {
     // Estados para controle da UI
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -34,15 +32,15 @@ export default function ServiceIndex() {
     const debouncedSearchTerm = useDebounce(searchTerm, 500); // 500ms de atraso
 
     // Chama o hook com os parâmetros do estado
-    const { data: serviceResponse, isLoading, isFetching, error } = useGetServices({
+    const { data: brandResponse, isLoading, isFetching, error } = useGetBrands({
         page,
         size: rowsPerPage,
         search: debouncedSearchTerm,
     });
 
     // Extrai os dados e a contagem total da resposta da API
-    const services = serviceResponse?.data.content || [];
-    const totalElements = serviceResponse?.data.totalElements || 0;
+    const brands = brandResponse?.data.content || [];
+    const totalElements = brandResponse?.data.totalElements || 0;
 
     const handleChangePage = (_: unknown, newPage: number) => {
         setPage(newPage);
@@ -54,13 +52,13 @@ export default function ServiceIndex() {
     };
 
     if (error) {
-        return <Typography color="error">Ocorreu um erro ao buscar os serviços: {error.message}</Typography>;
+        return <Typography color="error">Ocorreu um erro ao buscar as marcas: {error.message}</Typography>;
     }
 
     return (
         <Box sx={{ p: 4 }}>
             <Typography variant="h5" fontWeight="bold" gutterBottom>
-                Cadastro de Serviços
+                Cadastro de Marcas
             </Typography>
 
             <Paper elevation={2} sx={{ borderRadius: 4, p: 3, position: 'relative' }}>
@@ -74,7 +72,7 @@ export default function ServiceIndex() {
                 <Stack direction="row" spacing={2} alignItems="center" justifyContent="space-between" sx={{ mb: 2 }}>
                     <TextField
                         size="small"
-                        label="Pesquisar por Nome ou Descrição"
+                        label="Pesquisar por Nome"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         sx={{ flexGrow: 1 }}
@@ -89,22 +87,18 @@ export default function ServiceIndex() {
                         <TableHead>
                             <TableRow>
                                 <TableCell sx={{ fontWeight: 'bold' }}>Nome</TableCell>
-                                <TableCell sx={{ fontWeight: 'bold' }}>Preço</TableCell>
-                                <TableCell sx={{ fontWeight: 'bold' }}>Custo</TableCell>
                                 <TableCell sx={{ fontWeight: 'bold' }}>Status</TableCell>
                                 <TableCell align="right" sx={{ fontWeight: 'bold' }}>Ações</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {services.map((service) => (
-                                <TableRow key={service.id} hover>
-                                    <TableCell>{service.name}</TableCell>
-                                    <TableCell>{service.price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</TableCell>
-                                    <TableCell>{service.cost.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</TableCell>
+                            {brands.map((brand) => (
+                                <TableRow key={brand.id} hover>
+                                    <TableCell>{brand.name}</TableCell>
                                     <TableCell>
                                         <Chip
-                                            label={service.isActive ? 'Ativo' : 'Inativo'}
-                                            color={service.isActive ? 'success' : 'default'}
+                                            label={brand.isActive ? 'Ativo' : 'Inativo'}
+                                            color={brand.isActive ? 'success' : 'default'}
                                             size="small"
                                         />
                                     </TableCell>

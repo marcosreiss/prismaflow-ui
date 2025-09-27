@@ -1,54 +1,41 @@
-// src/services/brandService.ts
 
 import baseApi from './config/api';
-import type {
-    Brand,
-    BrandListResponse,
-    BrandResponse,
-    DeleteBrandResponse,
-} from '@/models/brandModel';
+import type { PagedApiResponse, ApiResponse, DeleteResult } from '@/types/apiResponse';
+import type { Brand } from '@/types/brandTypes';
 
-/**
- * GET /api/brands
- * Lista todas as marcas com paginação
- */
-export const getBrandsService = async (): Promise<BrandListResponse> => {
-    const response = await baseApi.get<BrandListResponse>('api/brands');
+
+export const getBrandsService = async (params: {
+    page: number;
+    size: number;
+    search?: string;
+}): Promise<PagedApiResponse<Brand>> => {
+    const response = await baseApi.get<PagedApiResponse<Brand>>('api/brands', { params });
     return response.data;
 };
 
-/**
- * GET /api/brands/{id}
- * Obtém uma marca pelo ID
- */
-export const getBrandByIdService = async (id: number): Promise<BrandResponse> => {
-    const response = await baseApi.get<BrandResponse>(`api/brands/${id}`);
+
+export const getBrandByIdService = async (id: number): Promise<ApiResponse<Brand>> => {
+    const response = await baseApi.get<ApiResponse<Brand>>(`api/brands/${id}`);
     return response.data;
 };
 
-/**
- * POST /api/brands
- * Cria uma nova marca
- */
-export const createBrandService = async (brandData: Omit<Brand, 'id'>): Promise<BrandResponse> => {
-    const response = await baseApi.post<BrandResponse>('api/brands', brandData);
+
+export const createBrandService = async (brandData: Omit<Brand, 'id'>): Promise<ApiResponse<Brand>> => {
+    const response = await baseApi.post<ApiResponse<Brand>>('api/brands', brandData);
     return response.data;
 };
 
-/**
- * PUT /api/brands/{id}
- * Atualiza uma marca existente
- */
-export const updateBrandService = async (id: number, brandData: Partial<Brand>): Promise<BrandResponse> => {
-    const response = await baseApi.put<BrandResponse>(`api/brands/${id}`, brandData);
+
+export const updateBrandService = async (
+    id: number,
+    brandData: Partial<Brand>
+): Promise<ApiResponse<Brand>> => {
+    const response = await baseApi.put<ApiResponse<Brand>>(`api/brands/${id}`, brandData);
     return response.data;
 };
 
-/**
- * DELETE /api/brands/{id}
- * Exclui uma marca pelo ID
- */
-export const deleteBrandService = async (id: number): Promise<DeleteBrandResponse> => {
-    const response = await baseApi.delete<DeleteBrandResponse>(`api/brands/${id}`);
+
+export const deleteBrandService = async (id: number): Promise<ApiResponse<DeleteResult<Brand>>> => {
+    const response = await baseApi.delete<ApiResponse<DeleteResult<Brand>>>(`api/brands/${id}`);
     return response.data;
 };
