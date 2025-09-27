@@ -8,9 +8,10 @@ export const navData: NavItem[] = [
     children: [
       { title: "Categorias", path: "/categorias", icon: "Layers" },
       { title: "Clientes", path: "/customers", icon: "User" },
-      { title: "Produtos", path: "/produtos", icon: "Box" },
+      { title: "Produtos", path: "/products", icon: "Box" },
       { title: "Serviços", path: "/services", icon: "Briefcase" },
       { title: "Marcas", path: "/brands", icon: "Tag" },
+
     ],
   },
   { title: "Gestão", path: "/gestao", icon: "Settings" },

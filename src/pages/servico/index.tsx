@@ -8,10 +8,10 @@ import { Edit, Delete, Visibility } from '@mui/icons-material';
 import { useGetServices, useCreateService, useUpdateService, useDeleteService } from '@/hooks/useService';
 import type { Service } from '@/types/serviceTypes';
 
-import ServiceTable from '@/components/service/ServiceTable';
-import CreateServiceModal from '@/components/service/CreateServiceModal';
-import EditServiceModal from '@/components/service/EditServiceModal';
-import ServiceDetailsModal from '@/components/service/ServiceDetailsModal';
+import ServiceTable from '@/components/services/ServiceTable';
+import CreateServiceModal from '@/components/services/CreateServiceModal';
+import EditServiceModal from '@/components/services/EditServiceModal';
+import ServiceDetailsModal from '@/components/services/ServiceDetailsModal';
 import DeleteConfirmationDialog from '@/components/shared/DeleteConfirmationDialog';
 
 function useDebounce(value: string, delay: number) {
